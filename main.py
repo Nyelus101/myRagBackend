@@ -208,3 +208,8 @@ async def ask_question(
 @app.get("/test")
 async def test():
     return {"message": "API is working!"}
+
+
+@app.get("/")
+def root():
+    return {"status": "ok"}

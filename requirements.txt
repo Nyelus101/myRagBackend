@@ -9,6 +9,13 @@ langchain-community
 langchain-core
 langchain-groq
 
+# LangChain Integrations
+langchain-groq
+langchain-chroma
+langchain-huggingface
+langchain-text-splitters
+langchain-google-genai
+
 # Vectorstore
 chromadb
 pinecone
@@ -20,6 +27,7 @@ langchain-google-genai
 
 # PDF Parsing
 PyPDF  # backend for PyPDFLoader via langchain_community
+pypdf
 
 # Environment Variables
 python-dotenv
@@ -27,6 +35,8 @@ python-dotenv
 # Typing & Utilities
 pydantic
 requests
+httpx
+typing-extensions
 
 # Logging (optional but recommended)
 loguru
