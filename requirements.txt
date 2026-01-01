@@ -1,35 +1,77 @@
 
-#updated requirements.txt because of build issues:
+# #updated requirements.txt because of build issues:
 
+# # Web Framework
+# fastapi
+# uvicorn[standard]
+# python-multipart
+
+# # LangChain Core & Ecosystem
+# langchain
+# langchain-community
+# langchain-core
+# langchain-text-splitters
+
+# # Integrations (LLM & Embeddings)
+# langchain-groq
+# langchain-huggingface
+# langchain-chroma
+
+# # Underlying AI Libraries
+# sentence-transformers
+# chromadb
+
+# # PDF Handling
+# pypdf
+
+# # Utilities
+# python-dotenv
+# pydantic
+# requests
+# httpx
+# typing-extensions
+# tqdm
+
+
+
+
+
+
+
+
+#Switched to this because I want to use pinecone and openai text embeddings.
 # Web Framework
 fastapi
 uvicorn[standard]
 python-multipart
 
-# LangChain Core & Ecosystem
+# LangChain Core
 langchain
 langchain-community
 langchain-core
 langchain-text-splitters
 
-# Integrations (LLM & Embeddings)
+# LLMs
 langchain-groq
-langchain-huggingface
-langchain-chroma
+openai
+langchain-openai
 
-# Underlying AI Libraries
-sentence-transformers
-chromadb
+# Vector DB
+pinecone-client
 
-# PDF Handling
+# PDF Parsing
 pypdf
 
-# Utilities
+# Environment Variables
 python-dotenv
+
+# Utilities
 pydantic
 requests
 httpx
 typing-extensions
+loguru
+aiofiles
 tqdm
 
 
@@ -47,6 +89,11 @@ tqdm
 
 
 
+
+
+
+
+#My main requirements.txt file that works well with chroma and ebeddings.
 
 # # Web Framework
 # fastapi
