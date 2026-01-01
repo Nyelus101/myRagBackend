@@ -1,54 +1,104 @@
+
+#updated requirements.txt because of build issues:
+
 # Web Framework
 fastapi
 uvicorn[standard]
 python-multipart
 
-# LangChain & Ecosystem
+# LangChain Core & Ecosystem
 langchain
 langchain-community
 langchain-core
-langchain-groq
-
-# LangChain Integrations
-langchain-groq
-langchain-chroma
-langchain-huggingface
 langchain-text-splitters
-langchain-google-genai
 
-# Vectorstore
-chromadb
-pinecone
+# Integrations (LLM & Embeddings)
+langchain-groq
+langchain-huggingface
+langchain-chroma
 
-# Embeddings
+# Underlying AI Libraries
 sentence-transformers
-# langchain-google-generative-ai
-langchain-google-genai
+chromadb
 
-# PDF Parsing
-PyPDF  # backend for PyPDFLoader via langchain_community
+# PDF Handling
 pypdf
 
-# Environment Variables
+# Utilities
 python-dotenv
-
-# Typing & Utilities
 pydantic
 requests
 httpx
 typing-extensions
-
-# Logging (optional but recommended)
-loguru
-
-# File Uploads
-aiofiles
-
-# Process
 tqdm
 
 
 
 
 
-# pip install -r requirements.txt
+
+
+
+
+
+
+
+
+
+
+
+
+# # Web Framework
+# fastapi
+# uvicorn[standard]
+# python-multipart
+
+# # LangChain & Ecosystem
+# langchain
+# langchain-community
+# langchain-core
+# langchain-groq
+
+# # LangChain Integrations
+# langchain-groq
+# langchain-chroma
+# langchain-huggingface
+# langchain-text-splitters
+# langchain-google-genai
+
+# # Vectorstore
+# chromadb
+# pinecone
+
+# # Embeddings
+# sentence-transformers
+# # langchain-google-generative-ai
+# langchain-google-genai
+
+# # PDF Parsing
+# PyPDF  # backend for PyPDFLoader via langchain_community
+# pypdf
+
+# # Environment Variables
+# python-dotenv
+
+# # Typing & Utilities
+# pydantic
+# requests
+# httpx
+# typing-extensions
+
+# # Logging (optional but recommended)
+# loguru
+
+# # File Uploads
+# aiofiles
+
+# # Process
+# tqdm
+
+
+
+
+
+# # pip install -r requirements.txt
