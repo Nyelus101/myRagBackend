@@ -97,37 +97,103 @@
 
 
 #Switched to this because I want to use pinecone and openai text embeddings.
+# import os
+# from dotenv import load_dotenv
+# import pinecone
+# # from langchain.embeddings.openai import OpenAIEmbeddings
+# from langchain_openai import OpenAIEmbeddings
+# from langchain_pinecone import Pinecone
+# from langchain_community.document_loaders import PyPDFLoader
+# from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+# # Load environment variables
+# load_dotenv()
+
+# # Pinecone settings
+# PINECONE_API_KEY = os.environ["PINECONE_API_KEY"]
+# PINECONE_ENVIRONMENT = os.environ["PINECONE_ENVIRONMENT"]
+# INDEX_NAME = os.environ["PINECONE_INDEX_NAME"]
+
+# # Initialize Pinecone client
+# pinecone.init(
+#     api_key=PINECONE_API_KEY,
+#     environment=PINECONE_ENVIRONMENT
+# )
+
+# # Initialize embeddings
+# embeddings = OpenAIEmbeddings()
+
+# def init_vectorstore() -> Pinecone:
+#     """
+#     Connects to an existing Pinecone index and returns a LangChain Pinecone vectorstore.
+#     """
+#     return Pinecone.from_existing_index(
+#         index_name=INDEX_NAME,
+#         embedding=embeddings,
+#         text_key="text"
+#     )
+
+# def add_documents_to_vectorstore(file_paths: list[str]) -> None:
+#     """
+#     Loads PDFs, splits into chunks, and adds them to Pinecone.
+#     """
+#     docs = []
+#     for path in file_paths:
+#         loader = PyPDFLoader(path)
+#         docs.extend(loader.load())
+
+#     # Split documents into chunks
+#     splitter = RecursiveCharacterTextSplitter(
+#         chunk_size=800,
+#         chunk_overlap=200
+#     )
+#     texts = splitter.split_documents(docs)
+
+#     # Initialize vectorstore and add docs
+#     vectorstore = init_vectorstore()
+#     vectorstore.add_documents(texts)
+
+
+
+
+
 import os
 from dotenv import load_dotenv
-import pinecone
-# from langchain.embeddings.openai import OpenAIEmbeddings
+from pinecone import Pinecone, ServerlessSpec
 from langchain_openai import OpenAIEmbeddings
-from langchain_pinecone import Pinecone
+from langchain_pinecone import Pinecone as LC_Pinecone
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-# Load environment variables
+# Load environment
 load_dotenv()
 
 # Pinecone settings
 PINECONE_API_KEY = os.environ["PINECONE_API_KEY"]
-PINECONE_ENVIRONMENT = os.environ["PINECONE_ENVIRONMENT"]
+PINECONE_ENVIRONMENT = os.environ.get("PINECONE_ENVIRONMENT")  # optional in v2
 INDEX_NAME = os.environ["PINECONE_INDEX_NAME"]
 
-# Initialize Pinecone client
-pinecone.init(
-    api_key=PINECONE_API_KEY,
-    environment=PINECONE_ENVIRONMENT
-)
+# ----------------- Pinecone client v2 -----------------
+pinecone_client = Pinecone(api_key=PINECONE_API_KEY)
 
-# Initialize embeddings
+# Optional: create index if it doesn't exist
+if INDEX_NAME not in pinecone_client.list_indexes().names():
+    pinecone_client.create_index(
+        name=INDEX_NAME,
+        dimension=1536, 
+        metric="cosine",
+        spec=ServerlessSpec(cloud="aws", region="us-east-1")  
+    )
+
+# ----------------- LangChain embeddings -----------------
 embeddings = OpenAIEmbeddings()
 
-def init_vectorstore() -> Pinecone:
+# ----------------- LC Pinecone vectorstore -----------------
+def init_vectorstore() -> LC_Pinecone:
     """
     Connects to an existing Pinecone index and returns a LangChain Pinecone vectorstore.
     """
-    return Pinecone.from_existing_index(
+    return LC_Pinecone.from_existing_index(
         index_name=INDEX_NAME,
         embedding=embeddings,
         text_key="text"
@@ -149,6 +215,5 @@ def add_documents_to_vectorstore(file_paths: list[str]) -> None:
     )
     texts = splitter.split_documents(docs)
 
-    # Initialize vectorstore and add docs
     vectorstore = init_vectorstore()
     vectorstore.add_documents(texts)
