@@ -1,6 +1,69 @@
 
 
-# My main requirements.txt file that works well with chroma and ebeddings.
+# # My main requirements.txt file that works well with chroma and ebeddings.
+
+# # Web Framework
+# fastapi
+# uvicorn[standard]
+# python-multipart
+
+# # LangChain & Ecosystem
+# langchain
+# langchain-community
+# langchain-core
+# langchain-groq
+
+# # LangChain Integrations
+# langchain-groq
+# langchain-chroma
+# langchain-huggingface
+# langchain-text-splitters
+# langchain-google-genai
+
+# # Vectorstore
+# chromadb
+# pinecone
+
+# # Embeddings
+# sentence-transformers
+# # langchain-google-generative-ai
+# langchain-google-genai
+
+# # PDF Parsing
+# PyPDF  # backend for PyPDFLoader via langchain_community
+# pypdf
+
+# # Environment Variables
+# python-dotenv
+
+# # Typing & Utilities
+# pydantic
+# requests
+# httpx
+# typing-extensions
+
+# # Logging (optional but recommended)
+# loguru
+
+# # File Uploads
+# aiofiles
+
+# # Process
+# tqdm
+
+
+
+
+
+# # pip install -r requirements.txt
+
+
+
+
+
+
+
+# for pinecone
 
 # Web Framework
 fastapi
@@ -13,24 +76,16 @@ langchain-community
 langchain-core
 langchain-groq
 
-# LangChain Integrations
-langchain-groq
-langchain-chroma
-langchain-huggingface
-langchain-text-splitters
-langchain-google-genai
-
 # Vectorstore
-chromadb
 pinecone
 
 # Embeddings
 sentence-transformers
-# langchain-google-generative-ai
+langchain-huggingface
+langchain-text-splitters
 langchain-google-genai
 
 # PDF Parsing
-PyPDF  # backend for PyPDFLoader via langchain_community
 pypdf
 
 # Environment Variables
@@ -50,9 +105,3 @@ aiofiles
 
 # Process
 tqdm
-
-
-
-
-
-# pip install -r requirements.txt
