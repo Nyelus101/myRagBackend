@@ -40,43 +40,74 @@
 
 
 #Switched to this because I want to use pinecone and openai text embeddings.
+# # Web Framework
+# fastapi
+# uvicorn[standard]
+# python-multipart
+
+# # LangChain Core
+# langchain
+# langchain-text-splitters
+
+# # LLMs / Embeddings
+# openai
+# langchain-openai
+# langchain-groq
+
+# # Vector DB
+# pinecone
+# langchain-pinecone
+
+# # PDF Parsing
+# pypdf
+
+# # Environment Variables
+# python-dotenv
+
+# # Utilities
+# pydantic
+# requests
+# httpx
+# typing-extensions
+# loguru
+# aiofiles
+# tqdm
+
+
 # Web Framework
-fastapi
-uvicorn[standard]
-python-multipart
+fastapi==0.128.0
+uvicorn[standard]==0.40.0
+python-multipart==0.0.21
 
 # LangChain Core
-langchain
-langchain-community
-langchain-core
-langchain-text-splitters
+langchain==1.2.0
+langchain-core==1.2.5
+langchain-community==0.4.1
+langchain-text-splitters==1.1.0
 
-# LLMs
-langchain-groq
-openai
-langchain-openai
+# LLMs / Embeddings
+openai==2.14.0
+langchain-openai==1.1.6
+langchain-groq==1.1.1
 
 # Vector DB
-pinecone
+pinecone==7.3.0
+langchain-pinecone==0.2.13
 
 # PDF Parsing
-pypdf
+pypdf==6.5.0
 
 # Environment Variables
-python-dotenv
+python-dotenv==1.2.1
 
 # Utilities
-pydantic
-requests
-httpx
-typing-extensions
-loguru
-aiofiles
-tqdm
-
-
-
-
+pydantic==2.12.5
+requests==2.32.5
+httpx==0.28.1
+typing-extensions==4.15.0
+loguru==0.7.3
+aiofiles==25.1.0
+tqdm==4.67.1
 
 
 

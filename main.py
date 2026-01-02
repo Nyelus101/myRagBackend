@@ -220,25 +220,123 @@
 
 #Switched to this because I want to use pinecone and openai text embeddings.
 
+# from fastapi import FastAPI, UploadFile, File, Form, Request
+# from fastapi.responses import JSONResponse
+# from fastapi.middleware.cors import CORSMiddleware
+# from typing import List
+# from logger import Logger
+# from modules.llm import get_llm_chain, get_general_llm_chain
+# from modules.query_handlers import query_chain
+# from modules.pdf_handlers import save_uploaded_files
+# from modules.loadvectorstore import (
+#     init_vectorstore,
+#     add_documents_to_vectorstore
+# )
+
+# logger = Logger()
+
+# MAX_FILE_SIZE_MB = 20
+# MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
+
+# # 🔥 Global Pinecone Vectorstore
+# VECTORSTORE = init_vectorstore()
+
+# app = FastAPI(title="My RagApp3")
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+# @app.middleware("http")
+# async def catch_exceptions_middleware(request: Request, call_next):
+#     try:
+#         return await call_next(request)
+#     except Exception as exc:
+#         logger.exception("Unhandled exception:")
+#         return JSONResponse(status_code=500, content={"error": str(exc)})
+
+# @app.post("/upload_pdfs/")
+# async def upload_pdfs(files: List[UploadFile] = File(...)):
+#     try:
+#         logger.info(f"Received {len(files)} files")
+
+#         for file in files:
+#             content = await file.read()
+#             if len(content) > MAX_FILE_SIZE_BYTES:
+#                 raise ValueError(f"{file.filename} exceeds {MAX_FILE_SIZE_MB}MB")
+#             await file.seek(0)
+
+#         paths = save_uploaded_files(files)
+#         add_documents_to_vectorstore(paths)
+
+#         return {"message": "Files processed and indexed successfully."}
+
+#     except ValueError as ve:
+#         return JSONResponse(status_code=400, content={"error": str(ve)})
+#     except Exception as e:
+#         logger.exception("Upload failed")
+#         return JSONResponse(status_code=500, content={"error": str(e)})
+
+# @app.post("/ask/")
+# async def ask_question(
+#     question: str = Form(...),
+#     mode: str = Form("document"),
+#     topic: str | None = Form(None)
+# ):
+#     try:
+#         if topic and topic.lower() not in question.lower():
+#             question = f"{question} for {topic}"
+
+#         if mode == "general":
+#             chain = get_general_llm_chain()
+#             return {"response": chain.invoke({"question": question}), "sources": []}
+
+#         chain = get_llm_chain(VECTORSTORE)
+#         return query_chain(chain, question)
+
+#     except Exception as e:
+#         logger.exception("Query failed")
+#         return JSONResponse(status_code=500, content={"error": str(e)})
+
+# @app.get("/")
+# def root():
+#     return {"status": "ok"}
+
+
+
+
+
+
+
+
+
+
+
+
 from fastapi import FastAPI, UploadFile, File, Form, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
+
+# Logger
 from logger import Logger
+
+# Modules
 from modules.llm import get_llm_chain, get_general_llm_chain
 from modules.query_handlers import query_chain
 from modules.pdf_handlers import save_uploaded_files
-from modules.loadvectorstore import (
-    init_vectorstore,
-    add_documents_to_vectorstore
-)
+from modules.loadvectorstore import init_vectorstore, add_documents_to_vectorstore
 
 logger = Logger()
 
 MAX_FILE_SIZE_MB = 20
 MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
 
-# 🔥 Global Pinecone Vectorstore
+# Global Pinecone Vectorstore
 VECTORSTORE = init_vectorstore()
 
 app = FastAPI(title="My RagApp3")
@@ -251,6 +349,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# -------------------- MIDDLEWARE --------------------
 @app.middleware("http")
 async def catch_exceptions_middleware(request: Request, call_next):
     try:
@@ -259,6 +358,7 @@ async def catch_exceptions_middleware(request: Request, call_next):
         logger.exception("Unhandled exception:")
         return JSONResponse(status_code=500, content={"error": str(exc)})
 
+# -------------------- ENDPOINTS --------------------
 @app.post("/upload_pdfs/")
 async def upload_pdfs(files: List[UploadFile] = File(...)):
     try:

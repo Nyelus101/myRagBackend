@@ -98,37 +98,56 @@
 
 #Switched to this because I want to use pinecone and openai text embeddings.
 import os
-from pinecone import Pinecone
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import Pinecone as PineconeVectorStore
+from dotenv import load_dotenv
+import pinecone
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_pinecone import Pinecone
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from dotenv import load_dotenv
 
+# Load environment variables
 load_dotenv()
 
+# Pinecone settings
+PINECONE_API_KEY = os.environ["PINECONE_API_KEY"]
+PINECONE_ENVIRONMENT = os.environ["PINECONE_ENVIRONMENT"]
 INDEX_NAME = os.environ["PINECONE_INDEX_NAME"]
 
-pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
+# Initialize Pinecone client
+pinecone.init(
+    api_key=PINECONE_API_KEY,
+    environment=PINECONE_ENVIRONMENT
+)
 
+# Initialize embeddings
 embeddings = OpenAIEmbeddings()
 
-def init_vectorstore():
-    index = pc.Index(INDEX_NAME)
-    return PineconeVectorStore(index, embeddings, "text")
+def init_vectorstore() -> Pinecone:
+    """
+    Connects to an existing Pinecone index and returns a LangChain Pinecone vectorstore.
+    """
+    return Pinecone.from_existing_index(
+        index_name=INDEX_NAME,
+        embedding=embeddings,
+        text_key="text"
+    )
 
-def add_documents_to_vectorstore(file_paths: list[str]):
+def add_documents_to_vectorstore(file_paths: list[str]) -> None:
+    """
+    Loads PDFs, splits into chunks, and adds them to Pinecone.
+    """
     docs = []
     for path in file_paths:
         loader = PyPDFLoader(path)
         docs.extend(loader.load())
 
+    # Split documents into chunks
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=800,
         chunk_overlap=200
     )
-
     texts = splitter.split_documents(docs)
 
+    # Initialize vectorstore and add docs
     vectorstore = init_vectorstore()
     vectorstore.add_documents(texts)
