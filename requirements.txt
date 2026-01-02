@@ -57,7 +57,7 @@ openai
 langchain-openai
 
 # Vector DB
-pinecone-client
+pinecone
 
 # PDF Parsing
 pypdf
